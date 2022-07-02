@@ -1,11 +1,15 @@
 package com.pubsap.creditcard.models;
 
+import com.pubsap.creditcard.validation.ValidCreditCard;
+import com.pubsap.creditcard.validation.ValidNumber;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter @Setter @NoArgsConstructor
 @Entity
@@ -16,9 +20,13 @@ public class CreditCard {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @Size(min = 12, max = 19, message = "Credit Card number length should fall between 12 to 19")
+    @ValidNumber(message = "Provided credit card is not numeric")
+    @ValidCreditCard(message = "Provided credit card number is not  luhn10 compliant")
     @Column(name="card_number", unique = true)
     private String cardNumber;
 
+    @NotBlank(message = "Name can not be blank")
     @Column(name="name")
     private String name;
 

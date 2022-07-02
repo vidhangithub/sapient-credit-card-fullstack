@@ -1,2 +1,2 @@
-insert into credit_card (id,card_number,name,credit_limit,balance)  values ('1','1234567890527452','Vidhan Chandra','25000.0','1125.0');
-insert into credit_card (id,card_number,name,credit_limit,balance)  values ('2','1234567890527459','Ridhan Chandra','2500.0','1126.0');
+insert into credit_card (id,card_number,name,credit_limit,balance)  values ('1','5256972233310721','Vidhan Chandra','25000.0','0.0');
+insert into credit_card (id,card_number,name,credit_limit,balance)  values ('2','5421872321356588','Rita Barik','2500.0','0.0');
