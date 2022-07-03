@@ -1,7 +1,6 @@
 package com.pubsap.creditcard.exception;
 
 import com.pubsap.creditcard.exceptions.ApiRunTimeException;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

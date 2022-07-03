@@ -30,7 +30,7 @@ public class CreditCard {
     private String cardNumber;
 
     @NotBlank(message = "Name can not be blank")
-    @NotNull
+    @NotNull(message = "must not be null")
     @Column(name="name")
     private String name;
 

@@ -3,6 +3,8 @@ package com.pubsap.creditcard;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.pubsap.creditcard.exceptions.ErrorMessages;
+import com.pubsap.creditcard.models.ApiError;
 import com.pubsap.creditcard.models.CreditCard;
 import com.pubsap.creditcard.repository.CreditCardProcessingRepo;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +14,7 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,6 +23,7 @@ import java.util.*;
 import static com.pubsap.creditcard.util.TestUtil.getTestUtil;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -29,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@WithMockUser
 class CreditCardProcessingApplicationTests {
 
 	@Autowired
@@ -121,5 +126,60 @@ class CreditCardProcessingApplicationTests {
 
 		mockMvc.perform(delete("/api/v1/cc-process/credit-card"))
 				.andExpect(status().isMethodNotAllowed());
+	}
+
+	@Test
+	public void test_credit_card_creation_failed_when_luhn10_non_compliant_credit_card_number_provided() throws Exception {
+		CreditCard expectedRecord = testData.get("invalidCardLuhnFailed");
+		final ApiError apiError = om.readValue(mockMvc.perform(post("/api/v1/cc-process/credit-card")
+						.contentType("application/json")
+						.content(om.writeValueAsString(expectedRecord)))
+				.andDo(print())
+				.andExpect(status().is4xxClientError()).andReturn().getResponse().getContentAsString(), ApiError.class);
+		assertEquals(ErrorMessages.INVALID_CREDIT_CARD.getErrorMsg(),apiError.getMessage());
+	}
+
+	@Test
+	public void test_credit_card_creation_failed_when_alpha_numeric_credit_card_number_provided() throws Exception {
+		CreditCard expectedRecord = testData.get("invalidCardNumberFormat");
+		final ApiError apiError = om.readValue(mockMvc.perform(post("/api/v1/cc-process/credit-card")
+						.contentType("application/json")
+						.content(om.writeValueAsString(expectedRecord)))
+				.andDo(print())
+				.andExpect(status().is4xxClientError()).andReturn().getResponse().getContentAsString(), ApiError.class);
+		assertEquals(ErrorMessages.INVALID_CREDIT_CARD.getErrorMsg(),apiError.getMessage());
+	}
+
+	@Test
+	public void test_credit_card_creation_failed_when_blank_user_provided() throws Exception {
+		CreditCard expectedRecord = testData.get("blankUserNameCard");
+		final ApiError apiError = om.readValue(mockMvc.perform(post("/api/v1/cc-process/credit-card")
+						.contentType("application/json")
+						.content(om.writeValueAsString(expectedRecord)))
+				.andDo(print())
+				.andExpect(status().is4xxClientError()).andReturn().getResponse().getContentAsString(), ApiError.class);
+		assertEquals(ErrorMessages.INVALID_USER_NAME.getErrorMsg(),apiError.getMessage());
+	}
+
+	@Test
+	public void test_credit_card_creation_failed_when_null_user_provided() throws Exception {
+		CreditCard expectedRecord = testData.get("nullUserNameCard");
+		final ApiError apiError = om.readValue(mockMvc.perform(post("/api/v1/cc-process/credit-card")
+						.contentType("application/json")
+						.content(om.writeValueAsString(expectedRecord)))
+				.andDo(print())
+				.andExpect(status().is4xxClientError()).andReturn().getResponse().getContentAsString(), ApiError.class);
+		assertEquals(ErrorMessages.INVALID_USER_NAME.getErrorMsg(),apiError.getMessage());
+	}
+
+	@Test
+	public void test_credit_card_creation_failed_when_null_credit_limit_provided() throws Exception {
+		CreditCard expectedRecord = testData.get("nullCreditLimit");
+		final ApiError apiError = om.readValue(mockMvc.perform(post("/api/v1/cc-process/credit-card")
+						.contentType("application/json")
+						.content(om.writeValueAsString(expectedRecord)))
+				.andDo(print())
+				.andExpect(status().is4xxClientError()).andReturn().getResponse().getContentAsString(), ApiError.class);
+		assertEquals(ErrorMessages.INVALID_CREDIT_CARD.getErrorMsg(),apiError.getMessage());
 	}
 }

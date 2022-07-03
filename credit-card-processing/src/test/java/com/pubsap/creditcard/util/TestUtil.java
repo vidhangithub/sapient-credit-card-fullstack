@@ -22,10 +22,14 @@ public class TestUtil {
         data.put("validCard2", validCard2);
         CreditCard invalidCardLuhnFailed = new CreditCard("Rita Chandra", "1234567890124578",BigDecimal.valueOf(20000.0));
         data.put("invalidCardLuhnFailed", invalidCardLuhnFailed);
-        CreditCard invalidCardNumberFormat = new CreditCard("Lily Chandra", "522867565789110F",BigDecimal.valueOf(15000.0));
+        CreditCard invalidCardNumberFormat = new CreditCard("Lily Chandra", "522867565a89110x",BigDecimal.valueOf(15000.0));
         data.put("invalidCardNumberFormat", invalidCardNumberFormat);
         CreditCard blankUserNameCard = new CreditCard("", "5192814696018473",BigDecimal.valueOf(5000.0));
         data.put("blankUserNameCard", blankUserNameCard);
+        CreditCard nullUserNameCard = new CreditCard(null, "5192814696018473",BigDecimal.valueOf(5000.0));
+        data.put("nullUserNameCard", nullUserNameCard);
+        CreditCard nullCreditLimit = new CreditCard("Lily Chandra", "522867565a89110x", null);
+        data.put("nullCreditLimit", nullCreditLimit);
         return data;
     }
 }
