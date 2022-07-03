@@ -8,8 +8,11 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 
 @Getter @Setter @NoArgsConstructor
 @Entity
@@ -27,20 +30,25 @@ public class CreditCard {
     private String cardNumber;
 
     @NotBlank(message = "Name can not be blank")
+    @NotNull
     @Column(name="name")
     private String name;
 
+    @NotNull
+    @Digits(integer = 9, fraction = 2)
     @Column(name="credit_limit")
-    private double creditLimit = 0.0;
+    private BigDecimal creditLimit;
 
+    @NotNull
+    @Digits(integer = 10, fraction = 2)
     @Column(name="balance")
-    private double balance = 0.0;
+    private BigDecimal balance = BigDecimal.valueOf(0.0);
 
-    public CreditCard(String name, String cardNumber, double creditLimit) {
+    public CreditCard(String name, String cardNumber, BigDecimal creditLimit) {
         this(name, cardNumber, creditLimit, creditLimit);
     }
 
-    public CreditCard(String name, String cardNumber, double creditLimit, double balance) {
+    public CreditCard(String name, String cardNumber, BigDecimal creditLimit, BigDecimal balance) {
         this.name = name;
         this.cardNumber = cardNumber;
         this.creditLimit = creditLimit;

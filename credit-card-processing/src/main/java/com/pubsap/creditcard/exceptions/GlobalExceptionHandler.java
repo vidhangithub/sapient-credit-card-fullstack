@@ -26,12 +26,12 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
     private final int FOUR = 4;
     private final int ONE = 1;
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
+    public ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
                                                                          HttpHeaders headers, HttpStatus status, WebRequest request) {
                 LOG.error(ex.getMessage());
                 final  StringBuilder builder = new StringBuilder();
                 builder.append(ex.getMessage());
-                if (!ex.getSupportedHttpMethods().isEmpty() && ex.getSupportedHttpMethods().size() > ONE) {
+                if (null != ex.getSupportedHttpMethods() && !ex.getSupportedHttpMethods().isEmpty() && ex.getSupportedHttpMethods().size() > ONE) {
                     builder.append(", Supported Methods are ");
                     ex.getSupportedHttpMethods().forEach(method -> builder.append(method + " "));
                 } else {
@@ -42,19 +42,31 @@ public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ApiRunTimeException.class)
-    protected  ResponseEntity<Object> handleApiRunTimeException(ApiRunTimeException ex, WebRequest request) {
+    public  ResponseEntity<Object> handleApiRunTimeException(ApiRunTimeException ex, WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponseEntity(HttpStatus.valueOf(ex.getStatus()), ex.getErrorMessage(), request);
     }
 
     @ExceptionHandler(InvalidCreditCardException.class)
-    protected  ResponseEntity<Object> handleInvalidCreditCardException(InvalidCreditCardException ex, WebRequest request) {
+    public  ResponseEntity<Object> handleInvalidCreditCardException(InvalidCreditCardException ex, WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponseEntity(HttpStatus.valueOf(ex.getStatus()), ex.getErrorMessage(), request);
     }
 
     @ExceptionHandler(InvalidUserNameException.class)
-    protected  ResponseEntity<Object> handleInvalidUserNameException(InvalidUserNameException ex, WebRequest request) {
+    public  ResponseEntity<Object> handleInvalidUserNameException(InvalidUserNameException ex, WebRequest request) {
+        LOG.error(ex.getMessage());
+        return buildResponseEntity(HttpStatus.valueOf(ex.getStatus()), ex.getErrorMessage(), request);
+    }
+
+    @ExceptionHandler(InvalidBalanceException.class)
+    public  ResponseEntity<Object> handleInvalidBalanceException(InvalidBalanceException ex, WebRequest request) {
+        LOG.error(ex.getMessage());
+        return buildResponseEntity(HttpStatus.valueOf(ex.getStatus()), ex.getErrorMessage(), request);
+    }
+
+    @ExceptionHandler(InvalidCreditLimitException.class)
+    public  ResponseEntity<Object> handleInvalidCreditLimitException(InvalidCreditLimitException ex, WebRequest request) {
         LOG.error(ex.getMessage());
         return buildResponseEntity(HttpStatus.valueOf(ex.getStatus()), ex.getErrorMessage(), request);
     }

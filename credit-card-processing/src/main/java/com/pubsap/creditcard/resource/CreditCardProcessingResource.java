@@ -1,7 +1,9 @@
 package com.pubsap.creditcard.resource;
 
 import com.pubsap.creditcard.api.CreditCardProcessingApi;
+import com.pubsap.creditcard.exceptions.InvalidBalanceException;
 import com.pubsap.creditcard.exceptions.InvalidCreditCardException;
+import com.pubsap.creditcard.exceptions.InvalidCreditLimitException;
 import com.pubsap.creditcard.exceptions.InvalidUserNameException;
 import com.pubsap.creditcard.models.CreditCard;
 import com.pubsap.creditcard.service.CreditCardProcessingService;
@@ -55,9 +57,18 @@ public class CreditCardProcessingResource implements CreditCardProcessingApi {
                 throw new InvalidCreditCardException(HttpStatus
                         .BAD_REQUEST.value(), getErrorMsg("cardNumber", bindingResult));
             } else if (bindingResult.hasFieldErrors("name")) {
-                LOG.error("Credit card holder name not provided");
+                LOG.error("Invalid user name");
                 throw new InvalidUserNameException(HttpStatus
                         .BAD_REQUEST.value(), getErrorMsg("name", bindingResult));
+            } else if (bindingResult.hasFieldErrors("creditLimit")) {
+                LOG.error("Invalid credit limit");
+                throw new InvalidCreditLimitException(HttpStatus
+                        .BAD_REQUEST.value(), "Field creditLimit "+getErrorMsg("creditLimit", bindingResult));
+            }
+            else if (bindingResult.hasFieldErrors("balance")) {
+                LOG.error("Invalid balance");
+                throw new InvalidBalanceException(HttpStatus
+                        .BAD_REQUEST.value(),  "Field balance "+getErrorMsg("balance", bindingResult));
             }
         }
     }
