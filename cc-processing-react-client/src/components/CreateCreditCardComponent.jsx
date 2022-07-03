@@ -29,7 +29,7 @@ class CreateCreditCardComponent extends Component {
            // this.props.history.push('/credit-cards');
            this.setState({successMessage: 'Success!'})
         }).catch((err => {
-            this.setState({errorMessage: err.response.data.details});
+            this.setState({errorMessage: err.response.data.message});
         }));
     }
     
