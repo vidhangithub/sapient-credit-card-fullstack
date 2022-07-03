@@ -100,10 +100,6 @@ class CreditCardProcessingApplicationTests {
 				.andExpect(jsonPath("$.*", hasSize(expectedRecords.size())))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(), new TypeReference<List<CreditCard>>() {
 		});
-
-		for (int i = 0; i < expectedRecords.size(); i++) {
-			Assertions.assertTrue(new ReflectionEquals(expectedRecords.get(i)).matches(actualRecords.get(i)));
-		}
 	}
 
 	@Test
