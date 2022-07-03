@@ -1,33 +1,32 @@
 import axios from 'axios';
 
-const CREATE_CREDIT_CARD_API_URL = "http://localhost:8080/api/v1/cc-process/credit-card";
-const GETALL_CREDIT_CARDs_API_URL = "http://localhost:8080/api/v1/cc-process/credit-cards";
+const CREDIT_CARD_API_BASE_URL = "http://localhost:18444/api/v1/credit-card";
 
 class CreditCardService {
 
     getCreditCards(){
-        return axios.get(GETALL_CREDIT_CARDs_API_URL, {
+        return axios.get(CREDIT_CARD_API_BASE_URL, {
             auth:{
-                username: "vidhan",
-                password: "chandra"
+                username: "user",
+                password: "password"
             }
         });
     }
 
     createCreditCard(creditCard){
-        return axios.post(CREATE_CREDIT_CARD_API_URL, creditCard, {
+        return axios.post(CREDIT_CARD_API_BASE_URL, creditCard, {
             auth:{
-                username: "vidhan",
-                password: "chandra"
+                username: "user",
+                password: "password"
             }
         })
     }
 
     getCrediCardByNumber(creditCardNumber){
-        return axios.get(CREATE_CREDIT_CARD_API_URL + '/' + creditCardNumber, {
+        return axios.get(CREDIT_CARD_API_BASE_URL + '/' + creditCardNumber, {
             auth:{
-                username: "vidhan",
-                password: "chandra"
+                username: "user",
+                password: "password"
             }
         });
     }
