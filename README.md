@@ -8,3 +8,4 @@
     - mvn package
     - mvn spring-boot:run
 - Bundled Application can be accessed on http://localhost:8080 
+  - when prompted please pass username 'vidhan' and password 'chandra'
