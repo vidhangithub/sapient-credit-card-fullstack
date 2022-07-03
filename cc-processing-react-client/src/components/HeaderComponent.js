@@ -6,7 +6,7 @@ class HeaderComponent extends Component {
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div><a href="https://javaguides.net" className="navbar-brand">Credit Card System</a></div>
+                    <div>Credit Card System</div>
                     </nav>
                 </header>
             </div>
