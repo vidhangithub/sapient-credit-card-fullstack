@@ -28,6 +28,7 @@ class CreateCreditCardComponent extends Component {
         CreditCardService.createCreditCard(creditCard).then(res => {
            // this.props.history.push('/credit-cards');
            this.setState({successMessage: 'Success!'})
+           window.location.reload();
         }).catch((err => {
             this.setState({errorMessage: err.response.data.message});
         }));
