@@ -15,6 +15,7 @@
 	<description>APIs for credit card processing system</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<frontend-src-dir>../cc-processing-react-client</frontend-src-dir>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,6 +81,30 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>react-build</id>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<phase>prepare-package</phase>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${frontend-src-dir}/build</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
