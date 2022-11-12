@@ -16,14 +16,14 @@ public class BasicAuthWebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(
                         request -> {
                             CorsConfiguration cors = new CorsConfiguration();
-                            cors.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000"));
+                            cors.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000","http://vidhan-sap-test.com"));
                             cors.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS"));
                             cors.setAllowedHeaders(Arrays.asList("*"));
                             return cors;
                         }
                 ).and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/h2-console/**","/actuator/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

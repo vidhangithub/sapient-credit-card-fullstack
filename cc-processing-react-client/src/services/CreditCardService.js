@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const GET_ALL_CREDIT_CARD_API_URL = "http://localhost:8080/api/v1/cc-process/credit-cards";
-const CREATE_CREDIT_CARD_API_URL = "http://localhost:8080/api/v1/cc-process/credit-card";
+const GET_ALL_CREDIT_CARD_API_URL = "http://vidhan-sap-test.com/saptest/api/v1/cc-process/credit-cards";
+const CREATE_CREDIT_CARD_API_URL = "http://vidhan-sap-test.com/saptest/api/v1/cc-process/credit-card";
 
 class CreditCardService {
 

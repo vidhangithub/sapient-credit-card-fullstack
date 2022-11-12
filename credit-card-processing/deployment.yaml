@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: vid-cc-processing-app
-          image: vidhanchandrauk/credit-card-processing:latest
+          image: vidhanchandrauk/vid-cc-processing-k8s:latest
           ports:
             - containerPort: 8080
 ---
