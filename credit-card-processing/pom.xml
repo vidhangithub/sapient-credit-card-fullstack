@@ -112,6 +112,11 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M7</version>
+			</plugin>
 
 			<!--<plugin>
 				<groupId>com.spotify</groupId>
@@ -142,5 +147,7 @@
 			</plugin>-->
 		</plugins>
 	</build>
-
+	<scm>
+		<developerConnection>scm:git:https://github.com/vidhangithub/vidhan-credit-card-fullstack.git</developerConnection>
+	</scm>
 </project>
